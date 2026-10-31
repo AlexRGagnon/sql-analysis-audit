@@ -34,3 +34,11 @@ The tested Jupyter stack emitted nonfatal Windows selector-thread and unencrypte
 No browser-based visual review, Linux/macOS execution, large-data benchmark, model evaluation against real model outputs, or causal/population inference is claimed. The five flawed analyses are authored fixtures. The dataset is real; the illustrative duplicate-tag dimension is synthetic and marked as such.
 
 All computation ran locally. GitHub hosts source only; no GitHub Actions, hosted notebooks, paid APIs, or cloud training were used.
+
+## Fresh GitHub clone verification
+
+After publication, implementation commit `452f2ccd0767944ddd5648a718b5226324fd0049` was cloned into a new directory on 2026-10-30. Imports were verified to resolve to the clone, not the editable installation. All **25 tests passed again**. All **8 notebook code cells** executed in a fresh local kernel; their sources and outputs matched the published executed notebook. The CLI report was byte-identical to `examples/report.json` with the SHA-256 recorded above.
+
+The local original, fresh clone, and GitHub `main` pointed to the same implementation commit and both working trees were clean. Repository metadata confirmed public visibility and GitHub Actions disabled. The subsequent verification-documentation commit changes this record only, not the tested implementation.
+
+Local verification artifacts were saved under `verification-sql-20261030-201529/` beside the project: `tests.log`, `notebook.log`, `notebook-comparison.log`, `summary.json`, and the regenerated report/notebook. These logs are not required to run the repository.
