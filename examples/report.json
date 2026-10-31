@@ -1,0 +1,224 @@
+{
+  "association": [
+    {
+      "cross_product": 3350125.8771929825,
+      "n": 342,
+      "pearson_r": 0.8712017673060114,
+      "scope": "pooled",
+      "slope_g_per_mm": 49.68556640610009,
+      "ss_x": 67426.54093567251,
+      "ss_y": 219307697.36842105
+    },
+    {
+      "cross_product": 608678.320601379,
+      "n": 342,
+      "pearson_r": 0.5848173822637013,
+      "scope": "species_centered",
+      "slope_g_per_mm": 40.70540077728046,
+      "ss_x": 14953.257036621788,
+      "ss_y": 72443483.21290235
+    }
+  ],
+  "data": {
+    "bytes": 15241,
+    "citation": "Horst AM, Hill AP, Gorman KB (2020). palmerpenguins. doi:10.5281/zenodo.3960218.",
+    "dataset": "palmerpenguins simplified penguins table",
+    "license": "CC0-1.0",
+    "license_source": "https://allisonhorst.github.io/palmerpenguins/#license",
+    "observations": 344,
+    "original_study": "Gorman KB, Williams TD, Fraser WR (2014). PLoS ONE 9(3):e90081. doi:10.1371/journal.pone.0090081",
+    "retrieved_date": "2026-10-30",
+    "sha256": "f204db2c753b0937caac3cb35258562c14f073e4bbc76be24b4c51ce22767a93",
+    "source_url": "https://raw.githubusercontent.com/allisonhorst/palmerpenguins/8957207b78d6ccd1b4654a9dd9c9041b657478ab/inst/extdata/penguins.csv",
+    "upstream_commit": "8957207b78d6ccd1b4654a9dd9c9041b657478ab",
+    "upstream_git_blob": "25b46d384bf81f8399188500ea54917bb49d8890",
+    "verified_sha256": "f204db2c753b0937caac3cb35258562c14f073e4bbc76be24b4c51ce22767a93"
+  },
+  "format_version": 1,
+  "join_audit": {
+    "fact_rows": 344,
+    "joined_rows": 344,
+    "unique_observation_ids": 344
+  },
+  "profile": {
+    "complete_cases": 333,
+    "first_year": 2007,
+    "last_year": 2009,
+    "mass_missing": 2,
+    "mass_observed": 342,
+    "mean_mass_g": 4201.754385964912,
+    "n": 344,
+    "sex_observed": 333
+  },
+  "review_cases": [
+    {
+      "candidate_mean_g": 4177.325581395349,
+      "claim": "SUM(body_mass_g) / COUNT(*) is the observed-mass mean.",
+      "correct_mean_g": 4201.754385964912,
+      "explanation": "COUNT(*) includes missing masses while SUM ignores them. Use AVG(body_mass_g), or divide by COUNT(body_mass_g). The estimand is the mean among measured masses, not an imputed population mean.",
+      "id": "null-denominator",
+      "verdict": "reject"
+    },
+    {
+      "candidate_mean_g": 4169.92224903745,
+      "claim": "The equally weighted mean of species means is the pooled observation mean.",
+      "correct_mean_g": 4201.754385964912,
+      "explanation": "Equal-species weighting answers a different question. Recover the observation-weighted mean using each species nonmissing mass count, not its total row count.",
+      "id": "unweighted-subgroup-means",
+      "verdict": "reject"
+    },
+    {
+      "candidate_rows": 496,
+      "claim": "Joining species tags preserves the number of observations.",
+      "correct_rows": 344,
+      "explanation": "A deliberately duplicated dimension key replicates Adelie observations. Reject duplicate keys before joining. DISTINCT is not a general repair because distinct real observations can share measurements.",
+      "guard_message": "Duplicate species dimension key: Adelie",
+      "id": "join-fanout",
+      "verdict": "reject"
+    },
+    {
+      "candidate_mean_g": 4207.057057057057,
+      "candidate_n": 333,
+      "claim": "Estimating the observed-mass mean requires every unrelated field to be present.",
+      "correct_mean_g": 4201.754385964912,
+      "correct_n": 342,
+      "explanation": "Filtering on sex and bill measurements discards additional usable masses. Complete-case analysis can be appropriate for a specified multivariable model, but it changes the sample here; missingness may be informative.",
+      "id": "unnecessary-complete-cases",
+      "verdict": "reject-for-stated-estimand"
+    },
+    {
+      "claim": "The pooled mass/flipper association establishes a causal effect applicable to each species.",
+      "explanation": "Pooled and within-species centered associations answer different descriptive questions. Neither identifies causation. Species adjustment alone does not resolve sex, year, sampling, or other confounding.",
+      "id": "causal-overclaim",
+      "pooled_r": 0.8712017673060114,
+      "species_centered_r": 0.5848173822637013,
+      "verdict": "not-supported"
+    }
+  ],
+  "runtime": {
+    "python": "3.13.3",
+    "sqlite": "3.49.1"
+  },
+  "scope": "Five authored flawed-analysis fixtures; no model was queried and no employer assessment was used. Descriptive analysis of a fixed historical sample, not causal or population inference.",
+  "species": [
+    {
+      "mass_observed": 151,
+      "mass_rank": 3,
+      "mean_mass_g": 3700.662251655629,
+      "n": 152,
+      "observation_share": 0.4418604651162791,
+      "species": "Adelie"
+    },
+    {
+      "mass_observed": 68,
+      "mass_rank": 2,
+      "mean_mass_g": 3733.0882352941176,
+      "n": 68,
+      "observation_share": 0.19767441860465115,
+      "species": "Chinstrap"
+    },
+    {
+      "mass_observed": 123,
+      "mass_rank": 1,
+      "mean_mass_g": 5076.016260162602,
+      "n": 124,
+      "observation_share": 0.36046511627906974,
+      "species": "Gentoo"
+    }
+  ],
+  "sql_sha256": {
+    "association.sql": "ed6822cc997b70657716511aff890e1a9d4bf669832222dd40034a267381e401",
+    "profile.sql": "a7bcc7bed036132167d6362e1c4b619c7654147e63facdb2f735215306aba845",
+    "schema.sql": "1bd19609a2c44132139450386541c9995d9a91a121f8111726fedcf3c702549c",
+    "species.sql": "d2e24d1f7ff997b8f91270631e3a014568f09121656f5637fcb2ed5c36ffe443",
+    "weighted_mean.sql": "2183c703ad9d78b5a9973836ed23ff8176c0816cf470ad59a68269362a326b8c",
+    "yearly.sql": "3c3a153a90d496cc65e789278c7c9e07a86f48d8b72e42ccbe57076058b4bf6e"
+  },
+  "weighted_means": {
+    "correct_pooled_mean_g": 4201.754385964912,
+    "equal_species_mean_g": 4169.92224903745
+  },
+  "yearly": [
+    {
+      "mass_observed": 49,
+      "mean_mass_g": 3696.4285714285716,
+      "n": 50,
+      "prior_sample_mean_g": null,
+      "sample_mean_change_g": null,
+      "species": "Adelie",
+      "year": 2007
+    },
+    {
+      "mass_observed": 50,
+      "mean_mass_g": 3742.0,
+      "n": 50,
+      "prior_sample_mean_g": 3696.4285714285716,
+      "sample_mean_change_g": 45.57142857142844,
+      "species": "Adelie",
+      "year": 2008
+    },
+    {
+      "mass_observed": 52,
+      "mean_mass_g": 3664.903846153846,
+      "n": 52,
+      "prior_sample_mean_g": 3742.0,
+      "sample_mean_change_g": -77.09615384615381,
+      "species": "Adelie",
+      "year": 2009
+    },
+    {
+      "mass_observed": 26,
+      "mean_mass_g": 3694.230769230769,
+      "n": 26,
+      "prior_sample_mean_g": null,
+      "sample_mean_change_g": null,
+      "species": "Chinstrap",
+      "year": 2007
+    },
+    {
+      "mass_observed": 18,
+      "mean_mass_g": 3800.0,
+      "n": 18,
+      "prior_sample_mean_g": 3694.230769230769,
+      "sample_mean_change_g": 105.76923076923094,
+      "species": "Chinstrap",
+      "year": 2008
+    },
+    {
+      "mass_observed": 24,
+      "mean_mass_g": 3725.0,
+      "n": 24,
+      "prior_sample_mean_g": 3800.0,
+      "sample_mean_change_g": -75.0,
+      "species": "Chinstrap",
+      "year": 2009
+    },
+    {
+      "mass_observed": 34,
+      "mean_mass_g": 5070.588235294118,
+      "n": 34,
+      "prior_sample_mean_g": null,
+      "sample_mean_change_g": null,
+      "species": "Gentoo",
+      "year": 2007
+    },
+    {
+      "mass_observed": 46,
+      "mean_mass_g": 5019.565217391304,
+      "n": 46,
+      "prior_sample_mean_g": 5070.588235294118,
+      "sample_mean_change_g": -51.02301790281399,
+      "species": "Gentoo",
+      "year": 2008
+    },
+    {
+      "mass_observed": 43,
+      "mean_mass_g": 5140.697674418605,
+      "n": 44,
+      "prior_sample_mean_g": 5019.565217391304,
+      "sample_mean_change_g": 121.13245702730092,
+      "species": "Gentoo",
+      "year": 2009
+    }
+  ]
+}
